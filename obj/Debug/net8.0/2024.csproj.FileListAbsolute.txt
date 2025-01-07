@@ -1,0 +1,14 @@
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/2024.GeneratedMSBuildEditorConfig.editorconfig
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/2024.AssemblyInfoInputs.cache
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/2024.AssemblyInfo.cs
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/2024.csproj.CoreCompileInputs.cache
+/Users/lmerienne/dev/aoc/2024/bin/Debug/net8.0/2024
+/Users/lmerienne/dev/aoc/2024/bin/Debug/net8.0/2024.deps.json
+/Users/lmerienne/dev/aoc/2024/bin/Debug/net8.0/2024.runtimeconfig.json
+/Users/lmerienne/dev/aoc/2024/bin/Debug/net8.0/2024.dll
+/Users/lmerienne/dev/aoc/2024/bin/Debug/net8.0/2024.pdb
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/2024.dll
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/refint/2024.dll
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/2024.pdb
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/2024.genruntimeconfig.cache
+/Users/lmerienne/dev/aoc/2024/obj/Debug/net8.0/ref/2024.dll
