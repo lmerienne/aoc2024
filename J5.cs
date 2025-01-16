@@ -5,7 +5,7 @@ public class J5
     List<List<int>> updates = new List<List<int>>();
     List<(int x, int y)> rules = new List<(int x, int y)>();
 
-    public bool isValid(List<int> update)
+    public bool IsValid(List<int> update)
     {
         foreach ((int x, int y) in rules)
         {
@@ -18,6 +18,47 @@ public class J5
             }
         }
         return true;
+    }
+
+    public List<int> CorrectOrder(List<int> update)
+    {
+        var graph = new Dictionary<int, List<int>>();
+        var indegree = new Dictionary<int, int>();
+
+        foreach (int page in update)
+        {
+            graph[page] = new List<int>();
+            indegree[page] =0;
+        }
+
+        foreach ((int x, int y) in rules)
+        {
+            if (update.Contains(x) && update.Contains(y))
+            {
+                graph[x].Add(y); 
+                indegree[y]++; 
+            }
+        }
+
+        var queue = new Queue<int>(indegree.Where(kv => kv.Value ==0).Select(kv => kv.Key));
+
+        var ordered = new List<int>();
+        while (queue.Count >0)
+        {
+            int page = queue.Dequeue();
+            ordered.Add(page);
+
+            foreach (int neighbor in graph[page])
+            {
+                indegree[neighbor]--;
+                if (indegree[neighbor] ==0)
+                {
+                    queue.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return ordered;
     }
 
     public void Read()
@@ -46,12 +87,12 @@ public class J5
 
         }
 
-
-        int sum = updates.Where(update => isValid(update))
+        int sum = updates.Where(update => !IsValid(update))
                          .Select(update =>
                          {
-                            int middleIndex = update.Count / 2;
-                            return update[middleIndex];
+                            var correctedUpdate = CorrectOrder(update);
+                            int middleIndex = correctedUpdate.Count /2;
+                            return correctedUpdate[middleIndex];
                          })
                          .Sum();
 
