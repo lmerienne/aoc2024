@@ -5,16 +5,14 @@ public class J6
     int height = grid.Length;
     char obstacle = '#';
 
-    HashSet<(int x, int y)> visitedPositions = [];
-
     public (int x, int y, char dir) InitPosition()
     {
-        for (int i = 0; i < height; i++)
+        for (int i =0; i < height; i++)
         {
-            for (int j = 0; j < width; j++)
+            for (int j =0; j < width; j++)
             {
                 char current = grid[i][j];
-                if ((current == '<') || (current == '>') || (current == '^') || (current == 'v'))
+                if (current == '<' || current == '>' || current == '^' || current == 'v')
                 {
                     return (i, j, current);
                 }
@@ -22,15 +20,29 @@ public class J6
         }
         throw new InvalidOperationException("Initial position not found.");
     }
-    public void Read()
-    {
-        var (x, y, dir) = InitPosition();
-        visitedPositions.Add((x, y));
 
-        while (x >= 0 && x < height && y >= 0 && y < width)
+    public bool SimulateWithObstruction(int x, int y)
+    {
+        var (posX, posY, direction) = InitPosition();
+        var visitedStates = new HashSet<(int, int, char)>();
+
+        string originalGridLine = grid[x];
+
+        grid[x] = grid[x].Remove(y, 1).Insert(y, "O");
+
+        while (true)
         {
-            int newX = x, newY = y;
-            switch (dir)
+            if (visitedStates.Contains((posX, posY, direction)))
+            {
+                grid[x] = originalGridLine;
+                return true;
+            }
+
+            visitedStates.Add((posX, posY, direction));
+
+            int newX = posX, newY = posY;
+
+            switch (direction)
             {
                 case '^': newX--; break;
                 case 'v': newX++; break;
@@ -40,27 +52,50 @@ public class J6
 
             if (newX <0 || newX >= height || newY <0 || newY >= width)
             {
-                break;
+                grid[x] = originalGridLine;
+                return false;
             }
 
-            if (grid[newX][newY] == obstacle)
+            if (grid[newX][newY] == obstacle || grid[newX][newY] == 'O')
             {
-                dir = dir switch
+                direction = direction switch
                 {
                     '^' => '>',
                     '>' => 'v',
                     'v' => '<',
                     '<' => '^',
-                    _ => dir
+                    _ => direction
                 };
             }
             else
             {
-                x = newX;
-                y = newY;
-                visitedPositions.Add((x, y));
+                posX = newX;
+                posY = newY;
             }
         }
-        Console.WriteLine(visitedPositions.Count);
+    }
+
+    public void Read()
+    {
+        int cpt =0;
+        var initialVisitedState = new HashSet<(int x, int y)>();
+        var (startX, startY, _) = InitPosition();
+        initialVisitedState.Add((startX, startY));
+
+        for (int i =0; i < height; i++)
+        {
+            for (int j =0; j < width; j++)
+            {
+                if (grid[i][j] == '.' && !initialVisitedState.Contains((i, j)))
+                {
+                    if (SimulateWithObstruction(i, j))
+                    {
+                        cpt++;
+                    }
+                }
+            }
+        }
+
+        Console.WriteLine($"Nombre de positions possibles pour une boucle: {cpt}");
     }
 }
