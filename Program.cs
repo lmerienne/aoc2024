@@ -17,8 +17,11 @@ public class Aoc
         //J4 j4 = new();
         //j4.Read();
 
-        J5 j5 = new();
-        j5.Read();
+        //J5 j5 = new();
+        //j5.Read();
+
+        J6 j6 = new();
+        j6.Read();
 
     }
 }
